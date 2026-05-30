@@ -9,10 +9,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
     
     <!-- Google Fonts: 'Outfit' (Modern Sans) & 'Playfair Display' (Luxury Serif) -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Security: Referrer & CSP policies -->
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self'; frame-src 'none';">
     
     <script>
         tailwind.config = {
@@ -199,7 +203,7 @@
 
                 <!-- Action Button -->
                 <div class="flex items-center gap-3">
-                    <a href="https://linktr.ee/simominello" target="_blank" class="cta-pulse hidden sm:flex items-center gap-2 bg-gradient-to-r from-brand-dark to-brand-primary text-white px-5 py-2.5 rounded-full text-xs font-bold hover:from-gray-800 hover:to-gray-700 transition-all duration-300 shadow-lg transform hover:-translate-y-0.5">
+                    <a href="https://linktr.ee/simominello" target="_blank" rel="noopener noreferrer" class="cta-pulse hidden sm:flex items-center gap-2 bg-gradient-to-r from-brand-dark to-brand-primary text-white px-5 py-2.5 rounded-full text-xs font-bold hover:from-gray-800 hover:to-gray-700 transition-all duration-300 shadow-lg transform hover:-translate-y-0.5">
                         <span>Order Via Linktree</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
@@ -243,7 +247,7 @@
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-up delay-300">
-                    <a href="https://wa.me/628123456789?text=Halo%20Admin%20Simominello,%20saya%20mau%20titip%20barang..." target="_blank" class="cta-pulse bg-gradient-to-r from-brand-gold to-yellow-400 text-brand-dark px-8 py-3.5 rounded-full font-bold text-sm text-center hover:from-yellow-500 hover:to-yellow-300 transition-all duration-300 shadow-lg shadow-yellow-500/25 transform hover:scale-105">
+                    <a href="https://wa.me/628123456789?text=Halo%20Admin%20Simominello,%20saya%20mau%20titip%20barang..." target="_blank" rel="noopener noreferrer" class="cta-pulse bg-gradient-to-r from-brand-gold to-yellow-400 text-brand-dark px-8 py-3.5 rounded-full font-bold text-sm text-center hover:from-yellow-500 hover:to-yellow-300 transition-all duration-300 shadow-lg shadow-yellow-500/25 transform hover:scale-105">
                         <i class="fa-brands fa-whatsapp mr-2"></i> Chat Admin
                     </a>
                     <a href="#catalog" class="bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-3.5 rounded-full font-bold text-sm text-center hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105">
