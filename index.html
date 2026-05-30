@@ -43,32 +43,147 @@
     <style>
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
-        
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c9a02e; }
+
         /* Glassmorphism Effect */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes shimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-6px); }
+        }
+        @keyframes gradientSlide {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5); }
+            70%  { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        .animate-fade-in-up { animation: fadeInUp 0.7s ease-out both; }
+        .animate-fade-in     { animation: fadeIn 0.6s ease-out both; }
+        .animate-float       { animation: float 3s ease-in-out infinite; }
+        .animate-shimmer {
+            background: linear-gradient(90deg, #D4AF37 0%, #f5e6a3 40%, #D4AF37 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Delay helpers */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Announcement bar gradient */
+        .announcement-bar {
+            background: linear-gradient(270deg, #0F172A, #1E293B, #0F172A);
+            background-size: 400% 400%;
+            animation: gradientSlide 8s ease infinite;
+        }
+
+        /* Nav link underline animation */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #D4AF37;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Product card lift */
+        .product-card {
+            transition: transform 0.35s cubic-bezier(.22,.61,.36,1), box-shadow 0.35s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+        }
+
+        /* Step card connector line (desktop) */
+        @media (min-width: 768px) {
+            .step-connector {
+                position: relative;
+            }
+            .step-connector::after {
+                content: '';
+                position: absolute;
+                top: 2rem;
+                right: -2rem;
+                width: 4rem;
+                height: 2px;
+                background: linear-gradient(90deg, rgba(212,175,55,0.6), rgba(212,175,55,0));
+            }
+            .step-connector:last-child::after {
+                display: none;
+            }
+        }
+
+        /* Social icon glow on hover */
+        .social-icon:hover {
+            box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
+        }
+
+        /* Gold pulse ring on CTA */
+        .cta-pulse:hover {
+            animation: pulse-ring 1.5s ease-out infinite;
+        }
+
+        /* Gradient divider */
+        .gradient-divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
         }
     </style>
 </head>
 <body class="bg-brand-light text-slate-800 antialiased selection:bg-brand-dark selection:text-white">
 
     <!-- ANNOUNCEMENT BAR -->
-    <div class="bg-brand-dark text-white text-[10px] md:text-xs font-medium py-2 px-4 text-center tracking-wider sticky top-0 z-50">
-        🚀 <span class="text-brand-gold">LIVE NOW:</span> TRIP SINGAPORE (CLOSE BESOK 14.00 WIB) • PENGIRIMAN 30 NOV
+    <div class="announcement-bar text-white text-[10px] md:text-xs font-medium py-2.5 px-4 text-center tracking-wider sticky top-0 z-50 shadow-md">
+        🚀 <span class="text-brand-gold font-bold">LIVE NOW:</span> TRIP SINGAPORE (CLOSE BESOK 14.00 WIB) &bull; PENGIRIMAN 30 NOV
     </div>
 
     <!-- NAVBAR (Sticky & Modern) -->
-    <nav class="sticky top-8 z-40 mx-4 md:mx-auto max-w-6xl mt-4 rounded-2xl glass-panel shadow-glass transition-all duration-300">
+    <nav class="sticky top-8 z-40 mx-4 md:mx-auto max-w-6xl mt-4 rounded-2xl glass-panel shadow-glass transition-all duration-500 hover:shadow-xl">
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-serif font-bold text-lg">S</div>
+                    <div class="w-8 h-8 bg-gradient-to-br from-brand-dark to-brand-gold text-white rounded-full flex items-center justify-center font-serif font-bold text-lg shadow-md">S</div>
                     <div class="flex flex-col">
                         <span class="font-serif text-xl font-bold leading-none tracking-tight text-black">Simominello</span>
                         <span class="text-[9px] font-sans text-gray-500 uppercase tracking-[0.2em] leading-tight">Personal Shopper</span>
@@ -77,14 +192,14 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#how-it-works" class="text-xs font-bold text-gray-500 hover:text-black uppercase tracking-widest transition">Cara Order</a>
-                    <a href="#catalog" class="text-xs font-bold text-gray-500 hover:text-black uppercase tracking-widest transition">Katalog</a>
-                    <a href="#reviews" class="text-xs font-bold text-gray-500 hover:text-black uppercase tracking-widest transition">Testimoni</a>
+                    <a href="#how-it-works" class="nav-link text-xs font-bold text-gray-500 hover:text-black uppercase tracking-widest transition-colors duration-300">Cara Order</a>
+                    <a href="#catalog" class="nav-link text-xs font-bold text-gray-500 hover:text-black uppercase tracking-widest transition-colors duration-300">Katalog</a>
+                    <a href="#reviews" class="nav-link text-xs font-bold text-gray-500 hover:text-black uppercase tracking-widest transition-colors duration-300">Testimoni</a>
                 </div>
 
                 <!-- Action Button -->
                 <div class="flex items-center gap-3">
-                    <a href="https://linktr.ee/simominello" target="_blank" class="hidden sm:flex items-center gap-2 bg-brand-dark text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-gray-800 transition shadow-lg transform hover:-translate-y-0.5">
+                    <a href="https://linktr.ee/simominello" target="_blank" class="cta-pulse hidden sm:flex items-center gap-2 bg-gradient-to-r from-brand-dark to-brand-primary text-white px-5 py-2.5 rounded-full text-xs font-bold hover:from-gray-800 hover:to-gray-700 transition-all duration-300 shadow-lg transform hover:-translate-y-0.5">
                         <span>Order Via Linktree</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
@@ -98,39 +213,40 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section class="relative mt-6 md:mt-10 px-4 md:px-0">
-        <div class="max-w-6xl mx-auto rounded-[2rem] overflow-hidden relative min-h-[500px] flex items-center bg-gray-900 shadow-2xl">
+    <section class="relative mt-6 md:mt-10 px-4 md:px-0 animate-fade-in">
+        <div class="max-w-6xl mx-auto rounded-[2rem] overflow-hidden relative min-h-[520px] flex items-center bg-gray-900 shadow-2xl ring-1 ring-white/10">
             
             <!-- Background Image -->
             <div class="absolute inset-0">
                 <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop" 
                      alt="Fashion Background" 
                      class="w-full h-full object-cover opacity-60">
-                <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
             </div>
 
             <!-- Content -->
-            <div class="relative z-10 px-8 md:px-16 max-w-2xl text-white py-12">
-                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 mb-6">
+            <div class="relative z-10 px-8 md:px-16 max-w-2xl text-white py-14">
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 mb-6 animate-fade-in-up">
                     <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                     <span class="text-[10px] font-bold tracking-widest uppercase">Admin di Orchard Road, SG 🇸🇬</span>
                 </div>
                 
-                <h1 class="font-serif text-4xl md:text-6xl font-bold leading-tight mb-6">
+                <h1 class="font-serif text-4xl md:text-6xl font-bold leading-tight mb-6 animate-fade-in-up delay-100" style="text-shadow: 0 2px 20px rgba(0,0,0,0.3)">
                     Titip Barang Branded <br> 
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-yellow-200 italic">Tanpa Ribet.</span>
+                    <span class="animate-shimmer italic">Tanpa Ribet.</span>
                 </h1>
                 
-                <p class="text-gray-300 text-base md:text-lg mb-8 font-light leading-relaxed max-w-md">
+                <p class="text-gray-300 text-base md:text-lg mb-8 font-light leading-relaxed max-w-md animate-fade-in-up delay-200">
                     Jastip terpercaya untuk Singapore & Malaysia. 
                     Harga transparan, barang 100% original, bisa request apa saja.
                 </p>
                 
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="https://wa.me/628123456789?text=Halo%20Admin%20Simominello,%20saya%20mau%20titip%20barang..." target="_blank" class="bg-brand-gold text-brand-dark px-8 py-3.5 rounded-full font-bold text-sm text-center hover:bg-yellow-500 transition shadow-lg shadow-yellow-500/20">
+                <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-up delay-300">
+                    <a href="https://wa.me/628123456789?text=Halo%20Admin%20Simominello,%20saya%20mau%20titip%20barang..." target="_blank" class="cta-pulse bg-gradient-to-r from-brand-gold to-yellow-400 text-brand-dark px-8 py-3.5 rounded-full font-bold text-sm text-center hover:from-yellow-500 hover:to-yellow-300 transition-all duration-300 shadow-lg shadow-yellow-500/25 transform hover:scale-105">
                         <i class="fa-brands fa-whatsapp mr-2"></i> Chat Admin
                     </a>
-                    <a href="#catalog" class="bg-white/10 backdrop-blur border border-white/30 text-white px-8 py-3.5 rounded-full font-bold text-sm text-center hover:bg-white hover:text-black transition">
+                    <a href="#catalog" class="bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-3.5 rounded-full font-bold text-sm text-center hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105">
                         Lihat Katalog
                     </a>
                 </div>
@@ -139,36 +255,37 @@
     </section>
 
     <!-- TRUST STATS -->
-    <section class="max-w-6xl mx-auto px-6 py-10">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-x divide-gray-200">
-            <div>
-                <p class="font-serif text-2xl font-bold text-brand-dark">3.500+</p>
-                <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Transaksi Sukses</p>
+    <section class="max-w-6xl mx-auto px-6 py-12">
+        <div class="gradient-divider mb-10 rounded-full"></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="group p-4 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300 cursor-default">
+                <p class="font-serif text-3xl font-bold text-brand-dark group-hover:text-brand-gold transition-colors duration-300">3.500+</p>
+                <p class="text-xs text-gray-500 uppercase tracking-wider mt-2 font-medium">Transaksi Sukses</p>
             </div>
-            <div>
-                <p class="font-serif text-2xl font-bold text-brand-dark">Daily</p>
-                <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Update Instagram</p>
+            <div class="group p-4 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300 cursor-default">
+                <p class="font-serif text-3xl font-bold text-brand-dark group-hover:text-brand-gold transition-colors duration-300">Daily</p>
+                <p class="text-xs text-gray-500 uppercase tracking-wider mt-2 font-medium">Update Instagram</p>
             </div>
-            <div>
-                <p class="font-serif text-2xl font-bold text-brand-dark">100%</p>
-                <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Original Store</p>
+            <div class="group p-4 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300 cursor-default">
+                <p class="font-serif text-3xl font-bold text-brand-dark group-hover:text-brand-gold transition-colors duration-300">100%</p>
+                <p class="text-xs text-gray-500 uppercase tracking-wider mt-2 font-medium">Original Store</p>
             </div>
-            <div>
-                <p class="font-serif text-2xl font-bold text-brand-dark">Express</p>
-                <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Shipping Air Cargo</p>
+            <div class="group p-4 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300 cursor-default">
+                <p class="font-serif text-3xl font-bold text-brand-dark group-hover:text-brand-gold transition-colors duration-300">Express</p>
+                <p class="text-xs text-gray-500 uppercase tracking-wider mt-2 font-medium">Shipping Air Cargo</p>
             </div>
         </div>
     </section>
 
     <!-- MARKETPLACE SHORTCUTS -->
-    <section class="bg-white py-16 border-y border-gray-100">
+    <section class="bg-gradient-to-b from-white to-gray-50/80 py-16 border-y border-gray-100">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="font-serif text-2xl md:text-3xl font-bold mb-3">Mau Checkout di mana?</h2>
-            <p class="text-gray-500 mb-10">Pilih platform favoritmu agar transaksi lebih nyaman.</p>
+            <h2 class="font-serif text-2xl md:text-3xl font-bold mb-3 text-brand-dark">Mau Checkout di mana?</h2>
+            <p class="text-gray-500 mb-10 text-sm md:text-base">Pilih platform favoritmu agar transaksi lebih nyaman.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Shopee -->
-                <a href="#" class="group relative flex items-center justify-between p-5 rounded-xl border border-gray-200 hover:border-shopee/50 bg-white hover:bg-orange-50 transition-all duration-300 shadow-sm hover:shadow-md">
+                <a href="#" class="group relative flex items-center justify-between p-5 rounded-2xl border border-gray-200 hover:border-shopee/50 bg-white hover:bg-orange-50 transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-shopee">
                             <i class="fa-solid fa-bag-shopping text-xl"></i>
@@ -182,7 +299,7 @@
                 </a>
 
                 <!-- Tokopedia -->
-                <a href="#" class="group relative flex items-center justify-between p-5 rounded-xl border border-gray-200 hover:border-tokopedia/50 bg-white hover:bg-green-50 transition-all duration-300 shadow-sm hover:shadow-md">
+                <a href="#" class="group relative flex items-center justify-between p-5 rounded-2xl border border-gray-200 hover:border-tokopedia/50 bg-white hover:bg-green-50 transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-tokopedia">
                             <i class="fa-solid fa-store text-xl"></i>
@@ -196,7 +313,7 @@
                 </a>
 
                 <!-- WhatsApp -->
-                <a href="https://wa.me/628123456789" class="group relative flex items-center justify-between p-5 rounded-xl border border-gray-200 hover:border-whatsapp/50 bg-white hover:bg-green-50 transition-all duration-300 shadow-sm hover:shadow-md">
+                <a href="https://wa.me/628123456789" class="group relative flex items-center justify-between p-5 rounded-2xl border border-gray-200 hover:border-whatsapp/50 bg-white hover:bg-green-50 transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-whatsapp">
                             <i class="fa-brands fa-whatsapp text-xl"></i>
@@ -213,11 +330,11 @@
     </section>
 
     <!-- CATALOG / BESTSELLERS -->
-    <section id="catalog" class="py-16 max-w-6xl mx-auto px-6">
+    <section id="catalog" class="py-20 max-w-6xl mx-auto px-6">
         <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
             <div>
-                <span class="text-brand-gold font-bold text-xs tracking-widest uppercase mb-2 block">Curated Choice</span>
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-dark">Best Sellers 🔥</h2>
+                <span class="text-brand-gold font-bold text-xs tracking-[0.25em] uppercase mb-2 block">Curated Choice</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-dark">Best Sellers <span class="inline-block animate-float">🔥</span></h2>
             </div>
             
             <!-- Filter Tabs -->
@@ -231,7 +348,7 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
             
             <!-- Product Card 1 (MODIFIED: CROCS) -->
-            <div class="group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+            <div class="product-card group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl border border-gray-100">
                 <div class="relative rounded-xl overflow-hidden aspect-[3/4] mb-3 bg-gray-200">
                     <span class="absolute top-2 left-2 bg-black/80 backdrop-blur text-white text-[9px] font-bold px-2 py-1 rounded">SG 🇸🇬</span>
                     <!-- Menggunakan Link Gambar Crocs dari Anda -->
@@ -255,7 +372,7 @@
             </div>
 
             <!-- Product Card 2 -->
-            <div class="group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+            <div class="product-card group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl border border-gray-100">
                 <div class="relative rounded-xl overflow-hidden aspect-[3/4] mb-3 bg-gray-200">
                     <span class="absolute top-2 left-2 bg-black/80 backdrop-blur text-white text-[9px] font-bold px-2 py-1 rounded">MY 🇲🇾</span>
                     <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
@@ -277,7 +394,7 @@
             </div>
 
             <!-- Product Card 3 -->
-            <div class="group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+            <div class="product-card group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl border border-gray-100">
                 <div class="relative rounded-xl overflow-hidden aspect-[3/4] mb-3 bg-gray-200">
                     <span class="absolute top-2 left-2 bg-black/80 backdrop-blur text-white text-[9px] font-bold px-2 py-1 rounded">SG 🇸🇬</span>
                     <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
@@ -299,7 +416,7 @@
             </div>
 
             <!-- Product Card 4 -->
-            <div class="group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+            <div class="product-card group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl border border-gray-100">
                 <div class="relative rounded-xl overflow-hidden aspect-[3/4] mb-3 bg-gray-200">
                     <span class="absolute top-2 left-2 bg-black/80 backdrop-blur text-white text-[9px] font-bold px-2 py-1 rounded">MY 🇲🇾</span>
                     <img src="https://www.smiggle.sg/SM/aurora/images/products/large/424698_red_l.jpg?i10c=img.resize(width:256)" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
@@ -322,46 +439,46 @@
         </div>
 
         <div class="mt-10 text-center">
-            <a href="https://linktr.ee/simominello" class="inline-block border-b-2 border-black pb-1 text-sm font-bold tracking-widest hover:text-gray-600 transition">
+            <a href="https://linktr.ee/simominello" class="inline-block border-b-2 border-brand-gold pb-1 text-sm font-bold tracking-widest text-brand-dark hover:text-brand-gold transition-colors duration-300">
                 LIHAT SEMUA KATALOG (LINKTREE)
             </a>
         </div>
     </section>
 
     <!-- HOW IT WORKS -->
-    <section id="how-it-works" class="py-16 bg-brand-primary text-white">
+    <section id="how-it-works" class="py-20 bg-gradient-to-br from-brand-dark via-brand-primary to-brand-dark text-white">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-12">
-                <h2 class="font-serif text-3xl font-bold mb-4">Cara Mudah Jastip</h2>
-                <p class="text-gray-400">Hanya 3 langkah sampai barang tiba di rumahmu.</p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">Cara Mudah Jastip</h2>
+                <p class="text-gray-400 text-sm md:text-base">Hanya 3 langkah sampai barang tiba di rumahmu.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 text-center hover:bg-white/10 transition">
-                    <div class="w-12 h-12 bg-brand-gold text-brand-dark rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">1</div>
-                    <h3 class="font-bold text-lg mb-2">Pilih Barang</h3>
-                    <p class="text-sm text-gray-400">Pilih dari katalog atau kirim foto barang yang kamu mau dari Instagram/Web Brand.</p>
+                <div class="step-connector bg-white/5 p-8 rounded-2xl border border-white/10 text-center hover:bg-white/10 hover:border-brand-gold/30 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-brand-gold to-yellow-300 text-brand-dark rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6 shadow-lg shadow-yellow-500/20">1</div>
+                    <h3 class="font-bold text-lg mb-3">Pilih Barang</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Pilih dari katalog atau kirim foto barang yang kamu mau dari Instagram/Web Brand.</p>
                 </div>
-                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 text-center hover:bg-white/10 transition">
-                    <div class="w-12 h-12 bg-brand-gold text-brand-dark rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">2</div>
-                    <h3 class="font-bold text-lg mb-2">Bayar DP/Full</h3>
-                    <p class="text-sm text-gray-400">Lakukan pembayaran aman via Transfer atau Marketplace (Shopee/Tokped).</p>
+                <div class="step-connector bg-white/5 p-8 rounded-2xl border border-white/10 text-center hover:bg-white/10 hover:border-brand-gold/30 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-brand-gold to-yellow-300 text-brand-dark rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6 shadow-lg shadow-yellow-500/20">2</div>
+                    <h3 class="font-bold text-lg mb-3">Bayar DP/Full</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Lakukan pembayaran aman via Transfer atau Marketplace (Shopee/Tokped).</p>
                 </div>
-                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 text-center hover:bg-white/10 transition">
-                    <div class="w-12 h-12 bg-brand-gold text-brand-dark rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">3</div>
-                    <h3 class="font-bold text-lg mb-2">Duduk Manis</h3>
-                    <p class="text-sm text-gray-400">Admin belanja, barang dibawa handcarry (aman dari penyok), lalu dikirim ke alamatmu.</p>
+                <div class="step-connector bg-white/5 p-8 rounded-2xl border border-white/10 text-center hover:bg-white/10 hover:border-brand-gold/30 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-brand-gold to-yellow-300 text-brand-dark rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6 shadow-lg shadow-yellow-500/20">3</div>
+                    <h3 class="font-bold text-lg mb-3">Duduk Manis</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Admin belanja, barang dibawa handcarry (aman dari penyok), lalu dikirim ke alamatmu.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-white pt-16 pb-8 border-t border-gray-200">
+    <footer class="bg-gradient-to-b from-gray-50 to-white pt-16 pb-8 border-t border-gray-200">
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-2 mb-4">
-                    <div class="w-6 h-6 bg-brand-dark text-white rounded-full flex items-center justify-center font-serif font-bold text-xs">S</div>
+                    <div class="w-7 h-7 bg-gradient-to-br from-brand-dark to-brand-gold text-white rounded-full flex items-center justify-center font-serif font-bold text-xs shadow-sm">S</div>
                     <span class="font-serif text-xl font-bold">Simominello</span>
                 </div>
                 <p class="text-sm text-gray-500 leading-relaxed max-w-sm">
@@ -382,26 +499,27 @@
             <div>
                 <h4 class="font-bold text-sm mb-4 uppercase tracking-widest">Kontak</h4>
                 <div class="flex gap-4">
-                    <a href="https://wa.me/628123456789" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-green-500 hover:text-white transition">
+                    <a href="https://wa.me/628123456789" class="social-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-green-500 hover:text-white transition-all duration-300">
                         <i class="fa-brands fa-whatsapp text-lg"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-pink-500 hover:text-white transition">
+                    <a href="#" class="social-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 hover:text-white transition-all duration-300">
                         <i class="fa-brands fa-instagram text-lg"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-black hover:text-white transition">
+                    <a href="#" class="social-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-black hover:text-white transition-all duration-300">
                         <i class="fa-brands fa-tiktok text-lg"></i>
                     </a>
                 </div>
             </div>
         </div>
         
-        <div class="max-w-6xl mx-auto px-6 pt-8 border-t border-gray-100 text-center">
-            <p class="text-[10px] text-gray-400 uppercase tracking-widest">&copy; 2023 Simominello Jastip. All Rights Reserved.</p>
+        <div class="gradient-divider mb-8 rounded-full"></div>
+        <div class="max-w-6xl mx-auto px-6 pt-4 text-center">
+            <p class="text-[10px] text-gray-400 uppercase tracking-widest">&copy; 2024 Simominello Jastip. All Rights Reserved.</p>
         </div>
     </footer>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/628123456789" class="fixed bottom-6 right-6 z-50 bg-brand-whatsapp text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-300">
+    <a href="https://wa.me/628123456789" class="fixed bottom-6 right-6 z-50 bg-whatsapp text-white w-14 h-14 rounded-full shadow-lg shadow-green-500/30 flex items-center justify-center hover:scale-110 transition-transform duration-300 cta-pulse">
         <i class="fa-brands fa-whatsapp text-3xl"></i>
     </a>
 
